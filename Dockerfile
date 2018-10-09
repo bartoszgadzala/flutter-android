@@ -4,6 +4,12 @@ WORKDIR /
 
 RUN git clone https://github.com/flutter/flutter.git && ln -s /flutter/bin/flutter /usr/bin/flutter
 
+RUN apt-get update && apt-get install -y build-essential git ruby2.5-dev \
+    && gem install fastlane \
+    && gem install bundler \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && apt-get autoremove -y && apt-get clean
+
 RUN export PATH=$ANDROID_HOME/tools/bin:$PATH && \
     echo y | sdkmanager "tools"  && \
     echo y | sdkmanager "platform-tools"  && \
@@ -19,6 +25,6 @@ RUN export PATH=$ANDROID_HOME/tools/bin:$PATH && \
     echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"  && \
     echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"  && \
     echo y | sdkmanager "patcher;v4" >/dev/null
-    
+
 RUN flutter doctor --android-licenses
 RUN flutter doctor
