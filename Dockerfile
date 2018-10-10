@@ -7,6 +7,7 @@ RUN git clone https://github.com/flutter/flutter.git && ln -s /flutter/bin/flutt
 RUN apt-get update && apt-get install -y build-essential git ruby2.5-dev \
     && gem install fastlane \
     && gem install bundler \
+    && gem install unf_ext -v '0.0.7.5' \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && apt-get autoremove -y && apt-get clean
 
